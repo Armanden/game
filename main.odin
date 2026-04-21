@@ -38,19 +38,20 @@ main :: proc() {
 
         dt := rl.GetFrameTime()
 
-        // movement
-        if rl.IsKeyDown(rl.KeyboardKey.RIGHT) {
-            player_x += speed * dt
-        }
-        if rl.IsKeyDown(rl.KeyboardKey.LEFT) {
-            player_x -= speed * dt
-        }
-        if rl.IsKeyDown(rl.KeyboardKey.UP) {
-            player_y -= speed * dt
-        }
-        if rl.IsKeyDown(rl.KeyboardKey.DOWN) {
-            player_y += speed * dt
-        }
+	//movemen and borders
+ 		if (rl.IsKeyDown(rl.KeyboardKey.RIGHT) && (player_x + radius + speed * dt <= 1000  )) {
+        	    player_x += speed * dt
+        	}
+        	if (rl.IsKeyDown(rl.KeyboardKey.LEFT) && (player_x - radius - speed * dt >= 0) ){
+        	    player_x -= speed * dt
+        	}
+        	if (rl.IsKeyDown(rl.KeyboardKey.UP) && (player_y - radius - speed *dt >= 0) ){
+       		     player_y -= speed * dt
+        	}
+        	if (rl.IsKeyDown(rl.KeyboardKey.DOWN) && (player_y + radius + speed * dt <= 750) ){
+        	    player_y += speed * dt
+        	}
+        
 
         player_pos := rl.Vector2{player_x, player_y}
         dest_pos := rl.Vector2{dest_x, dest_y}
@@ -106,10 +107,13 @@ main :: proc() {
             rl.DrawRectangleRec(wall.rect, wall.color)
         }
 
+
+		rl.DrawCircle(i32(dest_x), i32(dest_y), radius + 2, rl.YELLOW)
+		rl.DrawCircle(i32(dest_x), i32(dest_y), radius, rl.BLACK)
+		 
         rl.DrawCircle(i32(player_x), i32(player_y), radius, color)
 
-        rl.DrawCircle(i32(dest_x), i32(dest_y), radius + 2, rl.YELLOW)
-        rl.DrawCircle(i32(dest_x), i32(dest_y), radius, rl.BLACK)
+ 
 
         rl.EndDrawing()
     }
