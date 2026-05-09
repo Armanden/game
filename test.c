@@ -5,7 +5,7 @@
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 750
 #define NUM_LEVELS 10
-#define MAX_WALLS 8
+#define MAX_WALLS 30
 
 typedef struct {
     Rectangle rect;
@@ -40,7 +40,7 @@ static void generate_level(Level *level, uint32_t seed, int level_index) {
     PRNG rng;
     rng.state = seed ^ (uint32_t)(level_index * 2654435761u);
 
-    level->wall_count = 4 + (int)(prng_next(&rng) % 5);
+    level->wall_count = 10 + (int)(prng_next(&rng) % 10);
 
     level->player_pos.x = rand_range(&rng, 20, 150);
     level->player_pos.y = rand_range(&rng, SCREEN_HEIGHT - 150, SCREEN_HEIGHT - 20);
@@ -73,7 +73,8 @@ int main(void) {
     InitWindow(screenWidth, screenHeight, "Game");
     SetTargetFPS(60);
 
-    uint32_t seed = 42;
+	//seed planning on creating a menu screen
+    uint32_t seed = 246;
     Level levels[NUM_LEVELS];
     for (int i = 0; i < NUM_LEVELS; i++) {
         generate_level(&levels[i], seed, i);
